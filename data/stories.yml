@@ -1,0 +1,51 @@
+version: "3.1"
+
+stories:
+- story: happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+
+- story: sad path 1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_happy
+
+- story: sad path 2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+  - action: utter_goodbye
+
+- story: ask for time
+  steps:
+  - intent: ask_time
+  - action: action_tell_time
+
+- story: fallback path
+  steps:
+  - intent: nlu_fallback
+  - action: action_fallback
+
+
+
+  #√ Dev Bot deployed with id "5feb58c4-fe0a-46d9-83d0-1fc684344ad0" at "https://tunnel.botpress.cloud/d2c159e1-e891-4eca-8f4b-ed4eb2927928"
+- story: interactive_story_1
+  steps:
+  - intent: ask_time
+  - intent: data_query
+  - action: action_excel_query
+  - intent: ask_time
+  - intent: data_query
+  - action: action_excel_query

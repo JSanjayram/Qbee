@@ -1,0 +1,37 @@
+version: "3.1"
+
+rules:
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: Tell time
+  steps:
+  - intent: ask_time
+  - action: action_tell_time
+
+- rule: Handle low confidence predictions
+  steps:
+  - intent: nlu_fallback
+  - action: action_fallback
+
+- rule: Default fallback
+  steps:
+  - intent: default
+  - action: utter_default
+
+- rule: Handle data queries
+  steps:
+  - intent: data_query
+  - action: action_excel_query
+
+- rule: Handle general knowledge
+  steps:
+  - intent: general_query
+  - action: action_general_query

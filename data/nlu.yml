@@ -1,0 +1,131 @@
+version: "3.1"
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - feeling like a king
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - I am going to save the world
+    - super stoked
+    - extremely good
+    - so so perfect
+    - so good
+    - so perfect
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremly sad
+    - so saad
+    - so sad
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+- intent: ask_time
+  examples: |
+    - time is it?
+    - tell me the time
+    - current time please
+    - what's the time?
+    - time please
+- intent: general_query
+  examples: |
+    - tell me something interesting
+    - what can you do?
+    - how does this work?
+    - who made you?
+    - what are you?
+    - share a fact
+    - tell me a joke
+    - make me laugh
+    - I need help
+    - can you help me?
+    - what's new?
+    - what's up?
+- intent: nlu_fallback
+  examples: |
+    - asdfasdf
+    - 12345
+    - gibberish
+    - random text
+    - what does this mean?
+    - I don't understand
+- intent: data_query
+  examples: |
+    - what is [John](name)'s email
+    - get me [Mary](name)'s phone number
+    - what's the contact number for [David](name)
+    - [Sarah](name)'s email id please
+    - can I get [Michael](name)'s contact details
+    - show me [Lisa](name)'s information
+    - get [Robert](name)'s employee id
+    - what is the email address of [Jessica](name)
+    - phone number for [Thomas](name)
+    - [Emily](name)'s contact information
+    - rank the students name based on the current marks
+    - who are the average student
+- intent: default
+  examples: |
+    - I don't know
+    - Could you please explain
