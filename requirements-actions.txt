@@ -4,3 +4,5 @@ pandas
 openai
 gspread
 oauth2client
+sanic==21.12.1
+websockets==10.4
