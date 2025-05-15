@@ -1,22 +1,11 @@
-# Base image with Python 3.8.10
 FROM python:3.8.10-slim
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# Set working directory
 WORKDIR /app
 
-# Install dependencies
-COPY actions/requirements.txt .
+COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copy custom action code
-COPY actions /app
+COPY . .
 
-# Expose action server port
 EXPOSE 5055
-
-# Run action server
-CMD ["rasa", "run", "actions"]
+CMD ["python", "-m", "rasa_sdk", "--actions", "actions", "--port", "5055"]
