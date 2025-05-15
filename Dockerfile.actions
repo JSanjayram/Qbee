@@ -1,0 +1,15 @@
+FROM python:3.8.10-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+COPY requirements-actions.txt .
+RUN pip install --no-cache-dir --upgrade pip && pip install -r requirements-actions.txt
+
+COPY actions /app/actions
+
+EXPOSE 5055
+
+CMD ["python", "-m", "rasa_sdk", "--actions", "actions", "--port", "5055"]
