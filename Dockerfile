@@ -14,6 +14,9 @@ RUN pip install --upgrade pip && pip install rasa==3.5.11
 # Copy files
 COPY . /app
 
+RUN chmod +x /app/entrypoint.sh
+
+
 RUN rasa train
 
 # Expose Rasa port
