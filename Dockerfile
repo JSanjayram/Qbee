@@ -14,6 +14,8 @@ RUN pip install --upgrade pip && pip install rasa==3.5.11
 # Copy files
 COPY . /app
 
+RUN rasa train
+
 # Expose Rasa port
 EXPOSE 5005
 
