@@ -15,7 +15,8 @@ actions:
 slots:
   user_id:
     type: text
-    influence_conversation: false
+    mappings:
+      - type: custom
 
 session_config:
   session_expiration_time: 60
