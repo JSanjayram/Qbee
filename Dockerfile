@@ -3,7 +3,6 @@ FROM python:3.8.10-slim
 # Environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV PORT=5005
 ENV RASA_CREDENTIALS=/app/credentials.yml
 
 WORKDIR /app
@@ -19,10 +18,9 @@ COPY . /app
 RUN rasa train
 
 # Explicitly expose port (critical for Render)
-EXPOSE $PORT
 EXPOSE 5005
 
 
 # Run Rasa with explicit host binding
-CMD ["sh", "-c", "rasa run --enable-api --port ${PORT}"]
+CMD ["sh", "-c", "rasa run --enable-api --cors '*' --port ${PORT}"]
 
