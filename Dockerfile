@@ -20,11 +20,9 @@ RUN rasa train
 
 # Explicitly expose port (critical for Render)
 EXPOSE $PORT
+EXPOSE 5005
+
 
 # Run Rasa with explicit host binding
-CMD exec rasa run \
-    --enable-api \
-    --cors "*" \
-    --port $PORT \
-    --credentials $RASA_CREDENTIALS \
-    --debug
+CMD ["sh", "-c", "rasa run --enable-api --port ${PORT}"]
+
