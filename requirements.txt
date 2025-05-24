@@ -1,4 +1,4 @@
-rasa==3.5.11
-rasa-sdk==3.5.0
+rasa
+rasa-sdk
 sqlalchemy<2.0
 tensorflow~=2.11
