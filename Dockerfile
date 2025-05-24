@@ -10,7 +10,8 @@ WORKDIR /app
 
 # Install dependencies
 RUN pip install --upgrade pip && \
-    pip install rasa sqlalchemy<2.0
+    pip install rasa && \
+    pip install "sqlalchemy<2.0"
 
 COPY . /app
 
