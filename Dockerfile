@@ -26,4 +26,4 @@ RUN rasa train
 EXPOSE 5005
 
 # Use the Python script to start Rasa, ensuring the PORT env var is used
-CMD ["run", "--enable-api", "--cors", "*", "--debug"]
+CMD ["rasa","run", "--enable-api", "--cors", "*", "--debug"]
