@@ -24,4 +24,4 @@ EXPOSE 5005
 
 # Run Rasa and bind it to the PORT environment variable provided by Render
 # Ensure it binds to 0.0.0.0 so it's accessible externally
-CMD ["rasa", "run", "--enable-api", "--cors", "*", "--host", "0.0.0.0", "--port", "${PORT}"]
+CMD ["rasa", "run", "--enable-api", "--cors", "*", "--port", "${PORT}"]
