@@ -10,18 +10,20 @@ WORKDIR /app
 # Install dependencies
 RUN pip install --upgrade pip && \
     pip install rasa && \
-    pip install "sqlalchemy<2.0" # This is good to prevent the SQLAlchemy 2.0 warning
+    pip install "sqlalchemy<2.0"
 
+# Copy your Rasa project files into the container
+# This copies everything from your current directory to /app in the container
 COPY . /app
 
-# Train model
-# Consider training locally and uploading the model to a cloud storage (like Google Cloud Storage
-# or AWS S3) and then downloading it during deployment. This makes your build faster.
+# Train model - only if you haven't trained it and uploaded it
+# For production, it's generally better to train locally and upload the model,
+# then download it during deployment (as discussed in previous replies).
+# If you are training here, ensure your data/ and domain.yml are copied.
 RUN rasa train
 
-# Explicitly expose port (critical for Render)
+# Expose the default Rasa port for Docker (Render will still use its own PORT env var)
 EXPOSE 5005
 
-# Run Rasa and bind it to the PORT environment variable provided by Render
-# Ensure it binds to 0.0.0.0 so it's accessible externally
-CMD rasa run --enable-api --cors "*" --port "${PORT}" --host 0.0.0.0
+# Use the Python script to start Rasa, ensuring the PORT env var is used
+CMD ["python", "start_rasa.py"]
