@@ -1,5 +1,4 @@
 rasa-sdk
-rasa-sdk==3.5.0
 pandas
 openai
 gspread
