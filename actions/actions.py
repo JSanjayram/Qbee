@@ -8,6 +8,9 @@ from typing import Any, Text, Dict, List, Optional
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from openai import OpenAI
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
 
 # Configuration
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or "AIzaSyAb0RJRSMRheme0Ab2aoNKvm9i3n6Noin4"
@@ -22,37 +25,47 @@ gemini_client = OpenAI(
 
 # ---------------- Excel Handler ---------------- #
 class ExcelDataHandler:
-    def __init__(self, file_path: str = EXCEL_FILE_PATH):
-        self.file_path = file_path
+    def __init__(self, sheet_id: str, sheet_name: str):
+        self.sheet_id = sheet_id
+        self.sheet_name = sheet_name
         self.data = pd.DataFrame()
         self._load_data()
         self._start_refresh()
 
     def _load_data(self):
         try:
-            if os.path.exists(self.file_path):
-                df = pd.read_excel(self.file_path)
-                self.data = df.applymap(lambda x: str(x).strip() if pd.notna(x) else "")
-                print(f"[{datetime.now().strftime('%H:%M:%S')}] ✅ Excel refreshed: {len(self.data)} rows")
-            else:
-                raise FileNotFoundError("Excel file not found.")
+            scope = ['https://spreadsheets.google.com/feeds',
+                     'https://www.googleapis.com/auth/spreadsheets',
+                     'https://www.googleapis.com/auth/drive.file',
+                     'https://www.googleapis.com/auth/drive']
+
+            creds = ServiceAccountCredentials.from_json_keyfile_name("actions/service_account.json", scope)
+            client = gspread.authorize(creds)
+
+            sheet = client.open_by_key(self.sheet_id).worksheet(self.sheet_name)
+            records = sheet.get_all_records()
+            self.data = pd.DataFrame.from_records(records)
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] ✅ Google Sheet refreshed: {len(self.data)} rows")
         except Exception as e:
             print(f"⚠️ Error loading Excel: {e}")
 
     def _start_refresh(self):
         def refresh():
-            self._load_data()
+           # self._load_data()
             threading.Timer(10, refresh).start()
         refresh()
 
     def get_preview(self, full: bool = False) -> str:
+     self._load_data()
      return self.data.to_string(index=False) if full else self.data.head(50).to_string(index=False)
 
 
 # ---------------- Response Pipeline ---------------- #
 class ResponsePipeline:
     def __init__(self):
-        self.excel_handler = ExcelDataHandler()
+        self.sheet_id = os.getenv("SHEET_ID") or "1ONM8_0qEXfIgqknkqljzU1b_ebyCmZDvWm0hUuL4pzY"
+        self.sheet_name = os.getenv("SHEET_NAME") or "Sheet1"
+        self.excel_handler = ExcelDataHandler(self.sheet_id, self.sheet_name)
         self.initialized = False
         self.conversation_history: List[Dict[str, str]] = []
 
@@ -72,7 +85,7 @@ class ResponsePipeline:
         print(excel_preview)
         print("================================\n")
         self.conversation_history = [
-            {"role": "system", "content": "You are a helpful assistant using this Excel data to answer user queries."},
+            {"role": "system", "content": "You are a helpful assistant using this Excel data to answer user queries and your company name was Only Skill and you are developed by J Sanjay Ram and your name was Qbee."},
             {"role": "user", "content": f"Here is the full Excel data:\n{excel_preview}\n\nUser asked: {query}"}
         ]
         self.initialized = True

@@ -1,39 +1,25 @@
 version: '3.1'
 intents:
-- affirm
-- ask_time
-- bot_challenge
-- data_query
-- default
-- deny
-- general_query
-- goodbye
-- greet
-- mood_great
-- mood_unhappy
+- bot_info
 - nlu_fallback
 responses:
-  utter_greet:
-  - text: Hey there! How can I help you today?
-  utter_default:
-  - text: I'm not sure I understand. Could you rephrase that?
-  utter_cheer_up:
-  - text: "Here's something to cheer you up:"
-    image: https://i.imgflip.com/4/1bij.jpg
-  utter_did_that_help:
-  - text: Did that help you feel better?
-  utter_happy:
-  - text: Awesome! Let me know if there's anything else I can do.
+  utter_bot_info:
+  - text: I’m Qbee, an Excel assistant developed by Super Skills Corp. My trainer is J.Sanjay Ram.
   utter_goodbye:
   - text: Goodbye! Come back if you need anything.
   utter_iamabot:
-  - text: I'm Qbee an Excel assistant here to help you. I learn from our conversations!
+  - text: I'm Qbee, an Excel assistant here to help you. I learn from our conversations!
 actions:
+- action_bot_info
 - action_excel_query
-- action_general_query
-- action_tell_time
-- action_fallback
-- action_hybrid_response
+
+slots:
+  user_id:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: user_id
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
